@@ -14,6 +14,7 @@
 
 \documentclass[9pt,a4paper,twoside]{tau-class/tau}
 \usepackage[english]{babel}
+\usepackage{multirow}
 
 %----------------------------------------------------------
 % TITLE
@@ -37,7 +38,7 @@
 
 \affil[a]{1641014}
 \affil[b]{1620854}
-\affil[c]{NIU of author three}
+\affil[c]{1709992}
 \affil[d]{1711342}
 
 %----------------------------------------------------------
@@ -46,7 +47,7 @@
 
 \institution{Universitat Autònoma de Barcelona}
 \footinfo{Class Project}
-\theday{July 26, 2024}
+\theday{October 27, 2025}
 \leadauthor{Group 15} 		%% TODO: Set your group ID here
 \course{Aprenentatge Computacional}
 
@@ -75,21 +76,17 @@ In this project, we analyze the Titanic dataset to predict passenger survival us
     
 %----------------------------------------------------------
 
-\section{Introduction}
-
-    This sample document contains indications about how to write the report for the project in the subject of Natural Language Processing. The full report must be no longer than 5 pages without including references. \textbf{Any additional pages will not be evaluated}. The section structure is open, but you are encouraged to follow a principled academic writing style (you may mimic that of the papers provided as references). \textbf{Form will be taken into account in the evaluation of the project.}
-
 \section{Exploratory data analysis}
 
-    La base de dades consta de 12 columnes, incloent la variable target. Aquesta variable, anomenada Survived, és binària i conté 549 mostres falses i 342 mostres verdaderes, indicant que està relativament balancejada.
+    La base de dades consta de 12 columnes, incloent la variable target. Aquesta variable, anomenada Survived, és binària i conté 549 mostres falses i 342 mostres verdaderes, indicant que està relativament equilibrada.
 
     \begin{table}[H]
 		\centering
 		\caption{Tipus de les variables independents}
-		\label{tab:table}
+		\label{tab:tipus_variables}
 		\begin{tabular}{cc}
 			\toprule
-			\textbf{Nom} & \textbf{Tipus}
+			\textbf{Nom} & \textbf{Tipus}\\
 			\midrule
 			PassengerId & enter\\
             Pclass & categorica\\
@@ -107,17 +104,24 @@ In this project, we analyze the Titanic dataset to predict passenger survival us
 
 Pel que fa als NaNs, la mostra d'entrenament presenta 177 valors nuls a la columna Age, 687 a la columna Cabin i 2 a la columna Embarked. 
 
-Fent una matriu de correlació$^2$ de les variables numeriques observem que Survived està relacionada amb Pclass, Sex, Fare. Age està relacionada amb Pclass i Pclass está molt relacionada amb Flare.
+Fent una matriu de correlació al quadrat de les variables numèriques observem que Survived està relacionada amb Pclass, Sex, Fare. Age està relacionada amb Pclass i Pclass està molt relacionada amb Flare.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{correla.png}
+    \caption{Matriu de correlació al quadrat de les variables numèriques}
+    \label{fig:correlacio}
+\end{figure}
 
 Quant a les etiquetes de les variables categòriques (com amb la variable target), no sembla que les etiquetes estiguin prou poc representades per causar "problemes de categories rares".
 
 \begin{table}[H]
 		\centering
 		\caption{Etiquetes d'Embarked}
-		\label{tab:table}
+		\label{tab:etiquetes_embarked}
 		\begin{tabular}{cc}
 			\toprule
-			\textbf{Etiqueta} & \textbf{Nombre d'instancies}
+			\textbf{Etiqueta} & \textbf{Nombre d'instàncies}\\
 			\midrule
 			S & 644\\
             C & 168\\
@@ -129,10 +133,10 @@ Quant a les etiquetes de les variables categòriques (com amb la variable target
 \begin{table}[H]
 		\centering
 		\caption{Etiquetes de Pclass}
-		\label{tab:table}
+		\label{tab:etiquetes_pclass}
 		\begin{tabular}{cc}
 			\toprule
-			\textbf{Etiqueta} & \textbf{Nombre d'instancies}
+			\textbf{Etiqueta} & \textbf{Nombre d'instàncies}\\
 			\midrule
 			1 & 216\\
             2 & 184\\
@@ -142,31 +146,51 @@ Quant a les etiquetes de les variables categòriques (com amb la variable target
 	\end{table}
     
 \section{Preprocessing}
-    Les dades no estan normalitzades. Malgrat que les instancies nomeriques no semblen ser excessivament grans, considerem que normalitzar les dades sempre és una cosa positiva.
+    Les dades no estan normalitzades. Malgrat que les instàncies numèriques no semblen ser excessivament grans, considerem que normalitzar les dades sempre és una cosa positiva.
     En aquest cas, utilitzarem una estandarització Z. 
-    PassengerId i Name semblen inutils a l'hora de realitzar la predicció. Malgrat aixo, sobint la mida del nom és considerada una mostra de prestigi com es veu a la noblesa, per aixo hem decidit també provar 
-    d'afegir la mida del nom com a variable. Curiosament, a la matriu de correlació$^2$ es pot veure una correlació amb la variable target. 
-    Per tractar les variables categoriques, podem aprofitar la monotonietat de la variable Pclass per interpretar-ho com una variable numerica i repartir Embarked en tres variables binaries. Aquestes evidentment apareixen correlacionades a la matriu de covariancies. 
-    En quant als Nans, els hem substituit per -1 a les variables numeriques (Age) i ha Embarked simplement quedara en 0 a totes les categories.
+    PassengerId i Name semblen inútils a l'hora de realitzar la predicció. Malgrat això, sovint la longitud del nom és considerada una mostra de prestigi com es veu a l'aristocràcia, per això també hem decidit provar 
+    d'afegir la mida del nom com a variable. Curiosament, a la matriu de correlació al quadrat es pot veure una correlació amb la variable target. 
+    Per tractar les variables categoòriques, podem aprofitar la monotonietat de la variable Pclass per interpretar-ho com una variable numèrica i repartir Embarked en tres variables binàries. Aquestes evidentment apareixen correlacionades a la matriu de covariàncies. 
+    En quant als Nans, els hem substituït per -1 a les variables numèriques (Age) i a Embarked simplement quedarà 0 en totes les categories.
     Considerem que no té sentit filtrar-los tenint en compte que al test set també n'hi ha i els necessitarem per fer la predicció.
-    No hem realitzat pca perqué teniem molt poques variables per tant era irrellevant.
+    No hem realitzat pca perquè teniem molt poques variables i per tant era irrellevant.
 
 \section{Metric Selection}
-    Hem entrenat un model logistic a partir de les dades preprocessades i sense tocar hiper-parametres.
-    Hem creat la matriu de confusió del model i hem provat l'accuracy, la f1_score i l'average_precission_score.
-    Despres hem realitzat la curva roc i la precission-recall curve. A partir d'aqui hem determinat que la variable target no esta gaire descompençada, 
-    utilitzarem l'accuracy_score.
+    Hem entrenat un model logístic a partir de les dades preprocessades i sense tocar hiper-paràmetres.
+    Hem creat la matriu de confusió del model i hem provat l'accuracy, la f1\_score i l'average\_precission\_score.
+    Despres hem realitzat la corba roc i la precission-recall curve. A partir d'aquí hem determinat que la variable target no està gaire descompensada, 
+    utilitzarem l'accuracy\_score.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.4\textwidth]{grafic.png}
+        \caption{Corba ROC i Precission-Recall Curve}
+        \label{fig:grafic}
+    \end{figure}
+    \begin{table}[H]
+        \centering
+        \caption{Matriu de confusió (test)}
+        \label{tab:confusion_matrix}
+        \begin{tabular}{cc|cc}
+            & & \multicolumn{2}{c}{\textbf{Prediccions}} \\
+            & & \textbf{0} & \textbf{1} \\
+            \cline{3-4}
+            \multirow{2}{*}{\rotatebox[origin=c]{90}{\textbf{Reals}}} 
+            & \textbf{0} & 105 & 21 \\
+            & \textbf{1} & 17 & 57 \\
+        \end{tabular}
+    \end{table}
 
 \section{Model Selection amb validació creuada}
-    Hem entrenat els seguents models per a triar quin encerta mes, aquesta han estat SVM i LogisticRegrsion ja que son els que s'han fet a classe i com a 3r hem triat el RandomForests, ja que el coneixem de l'assignatura de OOP.
-    Els accuracy scores dels models amb hyper-parametres per defecte son:
+    Hem entrenat els següents models per a triar quin encerta més, aquestes han estat SVM i LogisticRegrsion ja que són els que s'han fet a classe i com a 3r hem triat el RandomForests, ja que el coneixem de l'assignatura de OOP.
+    Els accuracy scores dels models amb hyper-paràmetres per defecte són:
 \begin{table}[H]
 		\centering
-		\caption{Etiquetes de Pclass}
-		\label{tab:table}
-		\begin{tabular}{cc}
-<			\toprule
-			\textbf{Model} & \textbf{Accuracity-score}
+		\caption{Accuracy scores dels models}
+		\label{tab:accuracy_scores}
+			\begin{tabular}{cc}
+			\toprule
+			\textbf{Model} & \textbf{Accuracity-score}\\
 			\midrule
 			SVM & 0.813722\\
             RandomForest & 0.804733\\
@@ -174,25 +198,32 @@ Quant a les etiquetes de les variables categòriques (com amb la variable target
             \bottomrule
 		\end{tabular}			
 	\end{table}
-    Malgrat que el temps d'entrenament per aquesta base de dades és negligible, si l'escalesim el que donaria millors resultats seria el logistic (0.011358s) seguit de el SVM(0.093215s) i RF (0.588249s).
-    En quant a la cerca d'hiperparametres ens hem plantejat utilitzar grid search (GridSearchCV) pero era molt costos i ens preocupava que amb la petita mida de la mostra, es produis overfiting implicit. Per tant hem acabat utilitzant random search (RandomizedSearchCV) amb 45 iteracions per model.
-    El que ha donat millors resoltat per models ha sigut:
+    Malgrat que el temps d'entrenament per aquesta base de dades és negligible, si l'escalèssim el que donaria millors resultats seria el logistic (0.011358s) seguit de el SVM(0.093215s) i RF (0.588249s).
+    En quant a la cerca d'hiperparàmetres ens hem plantejat utilitzar grid search (GridSearchCV) però era molt costós i ens preocupava que, degut la petita mida de la mostra, es produís overfiting implícit. Per tant hem acabat utilitzant random search (RandomizedSearchCV) amb 45 iteracions per model.
+    El que ha donat millors resultats pels models ha sigut:
 \begin{table}[H]
     \centering
     \caption{Resultats de la cerca d'hiperparàmetres dels models}
     \label{tab:hiperparametres}
-    \begin{tabular}{lccc}
+    \begin{tabular}{lcc}
         \toprule
-        \textbf{Model} & \textbf{Millors hiperparàmetres} & \textbf{Accuracy mitjà} & \textbf{Temps (s)} \\
+        \textbf{Model} & \textbf{Accuracy mitjà} & \textbf{Temps (s)} \\
         \midrule
-        RandomForest & \texttt{\{'n\_estimators': 100, 'min\_samples\_split': 5, ...\}} & 0.829364 & 9.052283 \\
-        SVM & \texttt{\{'kernel': 'rbf', 'gamma': 0.1, 'C': 1.6681005...\}} & 0.821543 & 2.532295 \\
-        LogisticRegression & \texttt{\{'solver': 'liblinear', 'penalty': 'l1', 'C': ...\}} & 0.785619 & 1.517158 \\
+        RandomForest & 0.829364 & 9.052283 \\
+        SVM & 0.821543 & 2.532295 \\
+        LogisticRegression & 0.785619 & 1.517158 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+\noindent\footnotesize\textit{Millors hiperparàmetres utilitzats:}
+\begin{itemize}
+    \item \textbf{RandomForest}: \texttt{\{'n\_estimators': 100, 'min\_samples\_split': 5, ...\}}
+    \item \textbf{SVM}: \texttt{\{'kernel': 'rbf', 'gamma': 0.1, 'C': 1.6681005...\}}
+    \item \textbf{LogisticRegression}: \texttt{\{'solver': 'liblinear', 'penalty': 'l1', 'C': ...\}}
+\end{itemize}
 \section{Anàlisi Final}
-La mètrica principals (Accuracy = 0.89) mostra un bon rendiment global. En un context pràctic, el model podria servir per assignar una probabilitat de supervivència i prioritzar recursos o suports segons risc. També podria usar-se com a eina d’anàlisi per entendre quines variables influeixen més en la supervivència.
+La mètrica principal (Accuracy = 0.89) mostra un bon rendiment global. En un context pràctic, el model podria servir per assignar una probabilitat de supervivència i prioritzar recursos o suports segons risc. També podria usar-se com a eina d’anàlisi per entendre quines variables influeixen més en la supervivència.
 
 Es podria millorar per exemple, extreure el títol del nom o crear la mida de la família, imputacions més precises dels valors nuls i ajust d'hiperparàmetres amb més iteracions.
 

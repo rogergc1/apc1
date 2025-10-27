@@ -1,0 +1,9 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Exploratory data analysis}{1}{}%
+\contentsline {section}{\numberline {2}Preprocessing}{1}{}%
+\contentsline {section}{\numberline {3}Metric Selection}{2}{}%
+\contentsline {section}{\numberline {4}Model Selection amb validació creuada}{2}{}%
+\contentsline {section}{\numberline {5}Anàlisi Final}{2}{}%
+\contentsline {section}{\numberline {6}Acknowledgements}{2}{}%
+\contentsline {section}{References}{2}{}%
+\contentsfinish 
