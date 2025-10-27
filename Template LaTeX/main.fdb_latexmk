@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1761604331 "main.bcf" "main.bbl" "main" 1761604338 0
+["biber main"] 1761604331 "main.bcf" "main.bbl" "main" 1761605059 0
   "./tau.bib" 1761604261 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "main.bcf" 1761604338 107604 1767445e4a0148527fee9484f405aed2 "pdflatex"
+  "main.bcf" 1761605058 107604 1767445e4a0148527fee9484f405aed2 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1761604336 "main.tex" "main.pdf" "main" 1761604338 0
+["pdflatex"] 1761605056 "main.tex" "main.pdf" "main" 1761605059 0
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-t1.enc" 1610747736 7007 7bfc8f72039f2cce6ca911c3c71db584 ""
@@ -239,11 +239,11 @@
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "figures//correla.png" 1761603397 32679 8e1348f64f2f83e0e752d24b165b484d ""
   "grafic.png" 1761603413 38487 5aa630fdb3d78db3a760ae4b7fb297b2 ""
-  "main.aux" 1761604338 3506 6fadea9decd009979ca894d0c049bbe0 "pdflatex"
+  "main.aux" 1761605058 3506 6fadea9decd009979ca894d0c049bbe0 "pdflatex"
   "main.bbl" 1761604333 466 ee04f40f768daeed26442158e95aba61 "biber main"
-  "main.run.xml" 1761604338 2298 6d752fdade44478b050ac144b9ec5e56 "pdflatex"
-  "main.tex" 1761604318 10235 13a50a5a83dc3639ef607e2c228d2139 ""
-  "main.toc" 1761604338 493 adf1314f2f53679d7fb41d0456eabe7d "pdflatex"
+  "main.run.xml" 1761605058 2298 6d752fdade44478b050ac144b9ec5e56 "pdflatex"
+  "main.tex" 1761605051 10290 6202883dcf40b13af0cf4da55e0aa39a ""
+  "main.toc" 1761605058 493 adf1314f2f53679d7fb41d0456eabe7d "pdflatex"
   "tau-class/tau.cls" 1761592995 14811 9dbfe13fc1bc4d2ee25bf98d1e259263 ""
   "tau-class/taubabel.sty" 1761592995 2369 a1bf684fde36e78a6391539fd38a7968 ""
   "tau-class/tauenvs.sty" 1761592995 1425 e159970f70dbd3e9403594324c0728a0 ""
